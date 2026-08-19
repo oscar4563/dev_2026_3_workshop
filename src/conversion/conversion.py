@@ -15,7 +15,7 @@ class Conversion:
             celsius_a_fahrenheit(0) -> 32.0
             celsius_a_fahrenheit(100) -> 212.0
         """
-        pass
+        return (celsius * 9/5) + 32
     
     def fahrenheit_a_celsius(self, fahrenheit):
         """
@@ -33,7 +33,7 @@ class Conversion:
             fahrenheit_a_celsius(32) -> 0.0
             fahrenheit_a_celsius(212) -> 100.0
         """
-        pass
+        return (fahrenheit - 32) * 5/9
     
     def metros_a_pies(self, metros):
         """
@@ -50,7 +50,7 @@ class Conversion:
         Ejemplo:
             metros_a_pies(1) -> 3.28084
         """
-        pass
+        return metros * 3.28084
     
     def pies_a_metros(self, pies):
         """
@@ -67,7 +67,7 @@ class Conversion:
         Ejemplo:
             pies_a_metros(3.28084) -> 1.0
         """
-        pass
+        return pies * 0.3048
     
     def decimal_a_binario(self, decimal):
         """
@@ -83,7 +83,7 @@ class Conversion:
             decimal_a_binario(10) -> "1010"
             decimal_a_binario(255) -> "11111111"
         """
-        pass
+        return bin(decimal)[2:]
     
     def binario_a_decimal(self, binario):
         """
@@ -99,8 +99,8 @@ class Conversion:
             binario_a_decimal("1010") -> 10
             binario_a_decimal("11111111") -> 255
         """
-        pass
-    
+        return int(binario, 2)
+
     def decimal_a_romano(self, numero):
         """
         Convierte un número decimal a numeración romana.
@@ -115,8 +115,8 @@ class Conversion:
             decimal_a_romano(9) -> "IX"
             decimal_a_romano(1994) -> "MCMXCIV"
         """
-        pass
-    
+        
+
     def romano_a_decimal(self, romano):
         """
         Convierte un número romano a decimal.
