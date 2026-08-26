@@ -15,7 +15,19 @@ class Games:
             - Tijera vence a papel
             - Papel vence a piedra
         """
-        pass
+        if jugador1 == jugador2:
+            return "empate"
+        
+        gana_jugador1 = (
+            (jugador1 == "piedra" and jugador2 == "tijera") or
+            (jugador1 == "tijera" and jugador2 == "papel") or
+            (jugador1 == "papel" and jugador2 == "piedra")
+        )
+        
+        if gana_jugador1:
+            return "jugador1"
+        else:
+            return "jugador2"
     
     def adivinar_numero_pista(self, numero_secreto, intento):
         """
@@ -28,7 +40,12 @@ class Games:
         Returns:
             str: "correcto", "muy alto" o "muy bajo"
         """
-        pass
+        if intento == numero_secreto:
+            return "correcto"
+        elif intento > numero_secreto:
+            return "muy alto"
+        else:
+            return "muy bajo"
     
     def ta_te_ti_ganador(self, tablero):
         """
@@ -45,7 +62,30 @@ class Games:
              ["O", "O", " "],
              [" ", " ", " "]] -> "X"
         """
-        pass
+        # Revisar filas
+        for fila in tablero:
+            if fila[0] == fila[1] == fila[2] and fila[0] != " ":
+                return fila[0]
+        
+        # Revisar columnas
+        for col in range(3):
+            if tablero[0][col] == tablero[1][col] == tablero[2][col] and tablero[0][col] != " ":
+                return tablero[0][col]
+        
+        # Revisar diagonales
+        if tablero[0][0] == tablero[1][1] == tablero[2][2] and tablero[0][0] != " ":
+            return tablero[0][0]
+        
+        if tablero[0][2] == tablero[1][1] == tablero[2][0] and tablero[0][2] != " ":
+            return tablero[0][2]
+        
+        # Revisar si hay casillas vacías
+        for fila in tablero:
+            for celda in fila:
+                if celda == " ":
+                    return "continua"
+        
+        return "empate"
     
     def generar_combinacion_mastermind(self, longitud, colores_disponibles):
         """
@@ -62,7 +102,7 @@ class Games:
             generar_combinacion_mastermind(4, ["rojo", "azul", "verde"]) 
             -> ["rojo", "azul", "rojo", "verde"]
         """
-        pass
+        return [random.choice(colores_disponibles) for _ in range(longitud)]
     
     def validar_movimiento_torre_ajedrez(self, desde_fila, desde_col, hasta_fila, hasta_col, tablero):
         """
@@ -82,4 +122,26 @@ class Games:
             - La torre se mueve horizontal o verticalmente
             - No puede saltar sobre otras piezas
         """
-        pass
+        # Debe moverse en línea recta (misma fila o misma columna)
+        if desde_fila != hasta_fila and desde_col != hasta_col:
+            return False
+        
+        # No se mueve si es la misma posición
+        if desde_fila == hasta_fila and desde_col == hasta_col:
+            return False
+        
+        # Movimiento horizontal
+        if desde_fila == hasta_fila:
+            paso = 1 if hasta_col > desde_col else -1
+            for col in range(desde_col + paso, hasta_col, paso):
+                if tablero[desde_fila][col] is not None and tablero[desde_fila][col] != " ":
+                    return False
+        
+        # Movimiento vertical
+        else:
+            paso = 1 if hasta_fila > desde_fila else -1
+            for fila in range(desde_fila + paso, hasta_fila, paso):
+                if tablero[fila][desde_col] is not None and tablero[fila][desde_col] != " ":
+                    return False
+        
+        return True

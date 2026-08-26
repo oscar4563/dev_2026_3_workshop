@@ -115,7 +115,30 @@ class Conversion:
             decimal_a_romano(9) -> "IX"
             decimal_a_romano(1994) -> "MCMXCIV"
         """
+        valores = [
+            (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+            (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+            (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
+        ]
+        resultado = ""
+        for valor, simbolo in valores:
+            while numero >= valor:
+                resultado += simbolo
+                numero -= valor
+        return resultado
+
+    def binario_a_romano(self, binario):
+        """
+        Convierte un número binario a numeración romana.
         
+        Args:
+            binario (str): Representación binaria como string
+            
+        Returns:
+            str: Número romano
+        """
+        decimal = self.binario_a_decimal(binario)
+        return self.decimal_a_romano(decimal)
 
     def romano_a_decimal(self, romano):
         """
@@ -131,7 +154,18 @@ class Conversion:
             romano_a_decimal("IX") -> 9
             romano_a_decimal("MCMXCIV") -> 1994
         """
-        pass
+        valores = {
+            'I': 1, 'V': 5, 'X': 10, 'L': 50,
+            'C': 100, 'D': 500, 'M': 1000
+        }
+        resultado = 0
+        for i in range(len(romano)):
+            valor_actual = valores[romano[i]]
+            if i + 1 < len(romano) and valor_actual < valores[romano[i + 1]]:
+                resultado -= valor_actual
+            else:
+                resultado += valor_actual
+        return resultado
     
     def texto_a_morse(self, texto):
         """
@@ -146,8 +180,20 @@ class Conversion:
         Ejemplo:
             texto_a_morse("SOS") -> "... --- ..."
             texto_a_morse("HELLO") -> ".... . .-.. .-.. ---"
-        """
-        pass
+            """
+        morse_dict = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.',
+            'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
+            'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---',
+            'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+            'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--',
+            'Z': '--..',
+            '0': '-----', '1': '.----', '2': '..---', '3': '...--',
+            '4': '....-', '5': '.....', '6': '-....', '7': '--...',
+            '8': '---..', '9': '----.'
+        }
+        texto = texto.upper()
+        return " ".join(morse_dict[caracter] for caracter in texto if caracter != " ")
     
     def morse_a_texto(self, morse):
         """
@@ -162,5 +208,17 @@ class Conversion:
         Ejemplo:
             morse_a_texto("... --- ...") -> "SOS"
             morse_a_texto(".... . .-.. .-.. ---") -> "HELLO"
-        """
-        pass
+            """
+        morse_dict = {
+            '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E',
+            '..-.': 'F', '--.': 'G', '....': 'H', '..': 'I', '.---': 'J',
+            '-.-': 'K', '.-..': 'L', '--': 'M', '-.': 'N', '---': 'O',
+            '.--.': 'P', '--.-': 'Q', '.-.': 'R', '...': 'S', '-': 'T',
+            '..-': 'U', '...-': 'V', '.--': 'W', '-..-': 'X', '-.--': 'Y',
+            '--..': 'Z',
+            '-----': '0', '.----': '1', '..---': '2', '...--': '3',
+            '....-': '4', '.....': '5', '-....': '6', '--...': '7',
+            '---..': '8', '----.': '9'
+        }
+        palabras = morse.split(" ")
+        return "".join(morse_dict[codigo] for codigo in palabras if codigo != "")
