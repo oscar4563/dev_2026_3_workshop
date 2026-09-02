@@ -122,6 +122,10 @@ class Matrix:
         return [[matriz[i][j] for i in range(filas)] for j in range(columnas)]
 
     def es_cuadrada(self, matriz):
+        if len(matriz) == 0:
+            return False
+        n = len(matriz)
+        return all(len(fila) == n for fila in matriz)
         """
         Verifica si una matriz es cuadrada (mismo número de filas y columnas).
 
@@ -135,8 +139,7 @@ class Matrix:
             es_cuadrada([[1, 2], [3, 4]]) -> True
             es_cuadrada([[1, 2, 3], [4, 5, 6]]) -> False
         """
-        n = len(matriz)
-        return all(len(fila) == n for fila in matriz)
+        
 
     def es_simetrica(self, matriz):
         """
@@ -234,8 +237,8 @@ class Matrix:
         d, e, f = matriz[1]
         g, h, i = matriz[2]
 
-        return (a * e * i + b * f * g + c * d * h) - (c * e * g + b * d * i + a * f * h)
-
+        return (a*e*i + b*f*g + c*d*h) - (c*e*g + b*d*i + a*f*h)
+        
     def identidad(self, n):
         """
         Genera una matriz identidad de tamaño n x n.

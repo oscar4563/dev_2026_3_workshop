@@ -14,7 +14,9 @@ class Magic:
         Returns:
             int: El n-ésimo número de Fibonacci
         """
-        if n <= 0:
+        if n < 0:
+            return None
+        elif n == 0:
             return 0
         elif n == 1:
             return 1
@@ -129,7 +131,9 @@ class Magic:
         Returns:
             int: El factorial de n
         """
-        if n <= 1:
+        if n < 0:
+            return None
+        elif n <= 1:
             return 1
         
         resultado = 1

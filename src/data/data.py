@@ -38,18 +38,22 @@ class Data:
     
     def eliminar_duplicados(self, lista):
         """
-        Elimina elementos duplicados de una lista sin usar set().
-        Mantiene el orden original de aparición.
+        Elimina los elementos duplicados de una lista, conservando el orden
+        de la primera aparición. Distingue entre tipos (ej. 1 y True se
+        consideran distintos).
         
         Args:
-            lista (list): Lista con posibles duplicados
+            lista (list): Lista con posibles elementos duplicados
             
         Returns:
-            list: Lista sin elementos duplicados
+            list: Lista sin duplicados
         """
+        vistos = set()
         resultado = []
         for elemento in lista:
-            if elemento not in resultado:
+            clave = (type(elemento), elemento)
+            if clave not in vistos:
+                vistos.add(clave)
                 resultado.append(elemento)
         return resultado
     
@@ -198,6 +202,9 @@ class Data:
         Returns:
             list: Matriz transpuesta
         """
+        if not matriz:
+            return []
+        
         filas = len(matriz)
         columnas = len(matriz[0])
         resultado = []

@@ -1,4 +1,6 @@
+import math
 class Geometria:
+    
     """
     Class with geometric exercises.
     Include basic and funny operations in 2D and 3D.
@@ -15,7 +17,9 @@ class Geometria:
         Returns:
             float: Área del rectángulo
         """
-        return base*altura
+        if base < 0 or altura < 0:
+            return 0
+        return base * altura
     
     def perimetro_rectangulo(self, base, altura):
         """
@@ -40,6 +44,8 @@ class Geometria:
         Returns:
             float: Área del círculo
         """
+        if radio < 0:
+            return 0
         return math.pi * radio ** 2
     
     def perimetro_circulo(self, radio):
@@ -186,6 +192,8 @@ class Geometria:
         Returns:
             float: Volumen del cubo
         """
+        if lado < 0:
+            return 0
         return lado ** 3
     
     def area_superficie_cubo(self, lado):
@@ -308,9 +316,14 @@ class Geometria:
         Returns:
             tuple: Coeficientes (A, B, C) de la ecuación de la recta
         """
+        if y1 == y2:
+            return (0, 1, -y1)
+        if x1 == x2:
+            return (1, 0, -x1)
+
         A = y2 - y1
         B = x1 - x2
-        C = (x2 * y1) - (x1 * y2)
+        C = -(A * x1 + B * y1)
         return (A, B, C)
     
     def area_poligono_regular(self, num_lados, lado, apotema):

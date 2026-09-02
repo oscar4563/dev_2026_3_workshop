@@ -12,7 +12,9 @@ class Stats:
         Ejemplo:
             promedio([1, 2, 3, 4, 5]) -> 3.0
         """
-        pass
+        if not numeros:
+            return 0
+        return sum(numeros) / len(numeros)
     
     def mediana(self, numeros):
         """
@@ -29,7 +31,17 @@ class Stats:
             mediana([1, 2, 3, 4, 5]) -> 3.0
             mediana([1, 2, 3, 4]) -> 2.5
         """
-        pass
+        if not numeros:
+            return 0
+        
+        ordenados = sorted(numeros)
+        n = len(ordenados)
+        mitad = n // 2
+
+        if n % 2 == 0:
+            return (ordenados[mitad - 1] + ordenados[mitad]) / 2
+        else:
+            return ordenados[mitad]
     
     def moda(self, numeros):
         """
@@ -45,7 +57,18 @@ class Stats:
         Ejemplo:
             moda([1, 2, 2, 3, 3, 3]) -> 3
         """
-        pass
+        if not numeros:
+            return None
+        
+        frecuencias = {}
+        for numero in numeros:
+            frecuencias[numero] = frecuencias.get(numero, 0) + 1
+
+        max_frecuencia = max(frecuencias.values())
+
+        for numero in numeros:
+            if frecuencias[numero] == max_frecuencia:
+                return numero
     
     def desviacion_estandar(self, numeros):
         """
@@ -61,7 +84,9 @@ class Stats:
         Ejemplo:
             desviacion_estandar([1, 2, 3, 4, 5]) -> 1.41...
         """
-        pass
+        if not numeros:
+            return 0
+        return self.varianza(numeros) ** 0.5
     
     def varianza(self, numeros):
         """
@@ -77,7 +102,11 @@ class Stats:
         Ejemplo:
             varianza([1, 2, 3, 4, 5]) -> 2.0
         """
-        pass
+        if not numeros:
+            return 0
+        
+        media = self.promedio(numeros)
+        return sum((numero - media) ** 2 for numero in numeros) / len(numeros)
     
     def rango(self, numeros):
         """
@@ -92,4 +121,6 @@ class Stats:
         Ejemplo:
             rango([1, 5, 3, 9, 2]) -> 8
         """
-        pass
+        if not numeros:
+            return 0
+        return max(numeros) - min(numeros)

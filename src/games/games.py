@@ -1,3 +1,6 @@
+import random
+
+
 class Games:
     def piedra_papel_tijera(self, jugador1, jugador2):
         """
@@ -15,13 +18,22 @@ class Games:
             - Tijera vence a papel
             - Papel vence a piedra
         """
-        if jugador1 == jugador2:
+        opciones_validas = {"piedra", "papel", "tijera"}
+        j1 = jugador1.lower()
+        j2 = jugador2.lower()
+
+        if j1 not in opciones_validas:
+            return jugador1
+        if j2 not in opciones_validas:
+            return jugador2
+
+        if j1 == j2:
             return "empate"
         
         gana_jugador1 = (
-            (jugador1 == "piedra" and jugador2 == "tijera") or
-            (jugador1 == "tijera" and jugador2 == "papel") or
-            (jugador1 == "papel" and jugador2 == "piedra")
+            (j1 == "piedra" and j2 == "tijera") or
+            (j1 == "tijera" and j2 == "papel") or
+            (j1 == "papel" and j2 == "piedra")
         )
         
         if gana_jugador1:
@@ -122,22 +134,22 @@ class Games:
             - La torre se mueve horizontal o verticalmente
             - No puede saltar sobre otras piezas
         """
-        # Debe moverse en línea recta (misma fila o misma columna)
+        if not (0 <= hasta_fila <= 7 and 0 <= hasta_col <= 7):
+            return False
+        if not (0 <= desde_fila <= 7 and 0 <= desde_col <= 7):
+            return False
+
         if desde_fila != hasta_fila and desde_col != hasta_col:
             return False
         
-        # No se mueve si es la misma posición
         if desde_fila == hasta_fila and desde_col == hasta_col:
             return False
         
-        # Movimiento horizontal
         if desde_fila == hasta_fila:
             paso = 1 if hasta_col > desde_col else -1
             for col in range(desde_col + paso, hasta_col, paso):
                 if tablero[desde_fila][col] is not None and tablero[desde_fila][col] != " ":
                     return False
-        
-        # Movimiento vertical
         else:
             paso = 1 if hasta_fila > desde_fila else -1
             for fila in range(desde_fila + paso, hasta_fila, paso):
